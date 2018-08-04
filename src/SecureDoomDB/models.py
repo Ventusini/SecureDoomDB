@@ -6,6 +6,9 @@ class Street(models.Model):
 
     def __str__(self):
         return self.name
+        
+    def __unicode__(self):
+        return self.name
 
 class House(models.Model):
     private_street = models.ForeignKey(Street, on_delete=models.CASCADE)
@@ -39,7 +42,7 @@ class Sensor(models.Model):
 
 class Incident(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, null=True)
-    street = models.ForeignKey(Street, on_delete=models.CASCADE, null=True)
+    street = models.ForeignKey(Street, related_name='street_name', on_delete=models.CASCADE, null=True)
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     value = models.PositiveIntegerField(default=1)

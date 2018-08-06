@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 # Create your models here.
 class Street(models.Model):
     name = models.CharField(max_length=30, blank=False, unique=True)
@@ -32,7 +32,7 @@ class Car(models.Model):
 
 class InOutRegister(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(default=datetime.date.today)
     kind =  models.CharField(max_length=3, blank=False)
     def __str__(self):
         return self.kind
@@ -44,9 +44,5 @@ class Incident(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, null=True)
     street = models.ForeignKey(Street, related_name='street_name', on_delete=models.CASCADE, null=True)
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
-    value = models.PositiveIntegerField(default=1)
-
-class Show(models.Model):
-    street_name = models.CharField(max_length=30, blank=False)
-    total = models.PositiveIntegerField()
+    date = models.DateTimeField(default=datetime.date.today)
+    type = models.CharField(max_length=30, default="False Alarm")
